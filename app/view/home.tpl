@@ -6,10 +6,7 @@
     <h4>It is OT Key API Demo</h4>
     <ul>
         <li >
-            <a href="/category/getRootCategoryInfoList">getRootCategoryInfoList</a>
-        </li>
-        <li >
-            <a href="/item/getCategoryItemInfoListFrame">getCategoryItemInfoListFrame</a>
+            <a href="/api/v1/items/searchItemsFrame/a/0/2">searchItemsFrame</a>
         </li>
     </ul>
 

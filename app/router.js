@@ -6,15 +6,6 @@
 module.exports = app => {
   const { router, controller } = app;
   router.get('/', controller.home.index);
-
-  categoryRoutes();
-  itemRoutes();
-
-  function categoryRoutes() {
-    router.get('/category/getRootCategoryInfoList', controller.category.getRootCategoryInfoList);
-  }
-
-  function itemRoutes() {
-    router.get('/item/getCategoryItemInfoListFrame', controller.item.getCategoryItemInfoListFrame);
-  }
+  router.get('/api/v1/items/searchItemsFrame/:itemTitle/:framePosition/:frameSize', controller.items.searchItemsFrame);
+  // app.router.resources('items', '/api/v1/items', controller.items);
 };
