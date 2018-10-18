@@ -28,6 +28,10 @@ class ItemsController extends Controller {
         format: /[A-Z]+/,
         required: false,
       },
+      language: {
+        type: 'string',
+        required: false,
+      },
       framePosition: {
         type: 'string',
         format: /\d+/,
@@ -45,6 +49,7 @@ class ItemsController extends Controller {
       minPrice: parseFloat(ctx.query.minPrice),
       maxPrice: parseFloat(ctx.query.maxPrice),
       currencyCode: ctx.query.currencyCode,
+      language: typeof (ctx.query.language) === 'undefined' ? '' : ctx.query.language,
       framePosition: parseInt(ctx.query.framePosition),
       frameSize: parseInt(ctx.query.frameSize),
     };
