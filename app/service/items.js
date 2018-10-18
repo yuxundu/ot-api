@@ -35,7 +35,7 @@ class ItemService extends Service {
  */
   async searchItemsFrame(params) {
 
-    const provider = '<Provider>Undefined</Provider>';
+    const provider = `<Provider>${params.provider}</Provider>`;
     const itemTitle = `<ItemTitle>${params.itemTitle}</ItemTitle>`;
     const minPrice = isNaN(params.minPrice) ? '' : `<MinPrice>${params.minPrice}</MinPrice>`;
     const maxPrice = isNaN(params.maxPrice) ? '' : `<MaxPrice>${params.maxPrice}</MaxPrice>`;

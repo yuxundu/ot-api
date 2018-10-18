@@ -9,6 +9,10 @@ class ItemsController extends Controller {
     } = this;
 
     ctx.validate({
+      provider: {
+        type: 'string',
+        required: false,
+      },
       itemTitle: {
         type: 'string',
         required: true,
@@ -45,6 +49,7 @@ class ItemsController extends Controller {
     }, ctx.query);
 
     const params = {
+      provider: typeof (ctx.query.provider) === 'undefined' ? 'Undefined' : ctx.query.language,
       itemTitle: ctx.query.itemTitle,
       minPrice: parseFloat(ctx.query.minPrice),
       maxPrice: parseFloat(ctx.query.maxPrice),
