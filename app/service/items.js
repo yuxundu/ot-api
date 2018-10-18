@@ -22,6 +22,8 @@ class ItemService extends Service {
   /**
  * Global search of the goods
  * @param {SearchItemsParameters} params search Parameters
+ * provider:
+ * http: //otapi.net/OtapiWebService2.asmx/GetProviderInfoList?instanceKey=opendemo&language=
  * itemTitle: required
  * minPrice: Floor price
  * maxPrice: roof price
