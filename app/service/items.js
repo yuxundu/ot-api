@@ -13,6 +13,7 @@ class ItemService extends Service {
   async request(url, data) {
     url = `${this.root}${url}`;
     const opts = {
+      timeout: [ '30s', '30s' ],
       data: Object.assign({
         instanceKey: `${this.instanceKey}`,
       }, data),
