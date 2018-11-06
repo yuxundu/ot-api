@@ -49,7 +49,7 @@ class ItemsController extends Controller {
     }, ctx.query);
 
     const params = {
-      provider: typeof (ctx.query.provider) === 'undefined' ? 'Undefined' : ctx.query.provider,
+      providers: typeof (ctx.query.provider) === 'undefined' ? [ 'Undefined' ] : ctx.query.provider.split(','),
       itemTitle: ctx.query.itemTitle,
       minPrice: parseFloat(ctx.query.minPrice),
       maxPrice: parseFloat(ctx.query.maxPrice),
