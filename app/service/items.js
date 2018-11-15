@@ -87,57 +87,57 @@ class ItemService extends Service {
         // this.ctx.logger.info(items[0].Item);
         for (const index in items[0].Item) {
           const item = items[0].Item[index];
-          const itemInfoAPI = await this.request('/GetItemInfo', {
-            language: params.language,
-            itemId: item.Id[0],
-          });
-          let jsonItmeInfo = '';
-          parseString(itemInfoAPI.data, function(err, data) {
-            jsonItmeInfo = JSON.stringify(data);
-          });
-          const jsonItemInfoObj = JSON.parse(jsonItmeInfo);
-          if (jsonItemInfoObj.OtapiItemInfoAnswer.ErrorCode[0] === 'Ok') {
-            this.ctx.logger.debug(jsonItemInfoObj.OtapiItemInfoAnswer.OtapiItemInfo[0].Title[0]);
-            item.Title[0] = jsonItemInfoObj.OtapiItemInfoAnswer.OtapiItemInfo[0].Title[0];
-          }
-          // this.ctx.logger.info(item.Title[0]);
-          // item.Title[0] = 'test';
-          // if (item.OriginalTitle) {
-          //   this.ctx.logger.info(item.OriginalTitle[0]);
+          // const itemInfoAPI = await this.request('/GetItemInfo', {
+          //   language: params.language,
+          //   itemId: item.Id[0],
+          // });
+          // let jsonItmeInfo = '';
+          // parseString(itemInfoAPI.data, function(err, data) {
+          //   jsonItmeInfo = JSON.stringify(data);
+          // });
+          // const jsonItemInfoObj = JSON.parse(jsonItmeInfo);
+          // if (jsonItemInfoObj.OtapiItemInfoAnswer.ErrorCode[0] === 'Ok') {
+          //   this.ctx.logger.debug(jsonItemInfoObj.OtapiItemInfoAnswer.OtapiItemInfo[0].Title[0]);
+          //   item.Title[0] = jsonItemInfoObj.OtapiItemInfoAnswer.OtapiItemInfo[0].Title[0];
           // }
+          this.ctx.logger.debug(item.Title[0]);
+          item.Title[0] = 'test';
+          if (item.OriginalTitle) {
+            this.ctx.logger.info(item.OriginalTitle[0]);
+          }
           //* * convert price   */
-          // if (typeof params.toCurrencyName !== 'undefined') {
-          //   if (item.Price && item.Price[0]) {
-          //     this.ctx.logger.debug(item.Price[0]);
-          //     const price = item.Price[0];
-          //     const originalCurrencyCode = price.OriginalCurrencyCode;
-          //     const originalPrice = price.OriginalPrice;
-          //     this.ctx.logger.debug(originalPrice);
-          //     const convertResultAPI = await this.convertMoney(originalCurrencyCode, params.toCurrencyName, originalPrice);
-          //     if (convertResultAPI.data && convertResultAPI.data.success === true) {
-          //       price.FixerConvertedPrice = `${convertResultAPI.data.result}`;
-          //       price.FixerCurrencyName = params.toCurrencyName;
-          //     }
-          //   }
+          if (typeof params.toCurrencyName !== 'undefined') {
+            if (item.Price && item.Price[0]) {
+              this.ctx.logger.debug(item.Price[0]);
+              const price = item.Price[0];
+              const originalCurrencyCode = price.OriginalCurrencyCode;
+              const originalPrice = price.OriginalPrice;
+              this.ctx.logger.debug(originalPrice);
+              const convertResultAPI = await this.convertMoney(originalCurrencyCode, params.toCurrencyName, originalPrice);
+              if (convertResultAPI.data && convertResultAPI.data.success === true) {
+                price.FixerConvertedPrice = `${convertResultAPI.data.result}`;
+                price.FixerCurrencyName = params.toCurrencyName;
+              }
+            }
+          }
+
+          // The text to translate
+          // const text = 'Hello, world!';
+          // The target language
+          // const target = 'ru';
+          // Translates some text into Russian
+          // await translate
+          //   .translate(text, target)
+          //   .then(results => {
+          //     const translation = results[0];
+
+          //     this.logger.debug(`Text: ${text}`);
+          //     this.logger.debug(`Translation: ${translation}`);
+          //   })
+          //   .catch(err => {
+          //     this.logger.error('ERROR:', err);
+          //   });
         }
-
-      // The text to translate
-      // const text = 'Hello, world!';
-      // The target language
-      // const target = 'ru';
-      // Translates some text into Russian
-      // await translate
-      //   .translate(text, target)
-      //   .then(results => {
-      //     const translation = results[0];
-
-      //     this.logger.debug(`Text: ${text}`);
-      //     this.logger.debug(`Translation: ${translation}`);
-      //   })
-      //   .catch(err => {
-      //     this.logger.error('ERROR:', err);
-      //   });
-      // }
       }
       this.logger.debug(jsonObj);
       result.push(jsonObj);
