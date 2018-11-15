@@ -9,6 +9,10 @@ class ItemsController extends Controller {
     } = this;
 
     ctx.validate({
+      toCurrencyName: {
+        type: 'string',
+        required: false,
+      },
       provider: {
         type: 'string',
         required: false,
@@ -54,9 +58,11 @@ class ItemsController extends Controller {
       minPrice: parseFloat(ctx.query.minPrice),
       maxPrice: parseFloat(ctx.query.maxPrice),
       currencyCode: ctx.query.currencyCode,
-      language: typeof (ctx.query.language) === 'undefined' ? '' : ctx.query.language,
+      language: typeof (ctx.query.language) === 'undefined' ? 'English' : ctx.query.language,
+      minFirstLot: parseInt(ctx.query.minFirstLot),
       framePosition: parseInt(ctx.query.framePosition),
       frameSize: parseInt(ctx.query.frameSize),
+      toCurrencyName: ctx.query.toCurrencyName,
     };
     const result = await this.ctx.service.items.searchItemsFrame(params);
 

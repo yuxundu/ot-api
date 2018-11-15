@@ -8,7 +8,7 @@ module.exports = appInfo => {
   // the config of the OTA
   config.ota = {
     serverUrl: 'http://otapi.net/OtapiWebService2.asmx',
-    instanceKey: 'opendemo',
+    instanceKey: '6fe9807c-56dd-4f87-a550-fe49cf4b7d6b',
   };
 
   // add your config here
