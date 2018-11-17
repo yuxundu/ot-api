@@ -59,6 +59,7 @@ class ItemsController extends Controller {
       maxPrice: parseFloat(ctx.query.maxPrice),
       currencyCode: ctx.query.currencyCode,
       language: typeof (ctx.query.language) === 'undefined' ? 'English' : ctx.query.language,
+      translateLanguageCode: typeof (ctx.query.translateLanguageCode) === 'undefined' ? 'en' : ctx.query.translateLanguageCode,
       minFirstLot: parseInt(ctx.query.minFirstLot),
       framePosition: parseInt(ctx.query.framePosition),
       frameSize: parseInt(ctx.query.frameSize),

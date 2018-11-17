@@ -4,14 +4,13 @@ const Service = require('egg').Service;
 
 const parseString = require('xml2js').parseString;
 // Imports the Google Cloud client library
-// const {
-//   Translate,
-// } = require('@google-cloud/translate');
-// const projectId = 'long-ceiling-221221';
-
-// const translate = new Translate({
-//   projectId,
-// });
+const { Translate } = require('@google-cloud/translate');
+const projectId = 'long-ceiling-221221';
+const key = 'AIzaSyCu-2T7-1B2t3hk92YYwa5618OacoQi_3I';
+const translate = new Translate({
+  projectId,
+  key,
+});
 class ItemService extends Service {
   constructor(ctx) {
     super(ctx);
@@ -104,6 +103,27 @@ class ItemService extends Service {
           item.Title[0] = 'test';
           if (item.OriginalTitle) {
             this.ctx.logger.info(item.OriginalTitle[0]);
+            // Translates some text into Russian
+            await translate
+              .translate(item.OriginalTitle[0], params.translateLanguageCode)
+              .then(results => {
+                item.translateTitle = results[0];
+              })
+              .catch(err => {
+                this.logger.error('ERROR:', err);
+              });
+          }
+          if (item.VendorName) {
+            this.ctx.logger.info(item.VendorName[0]);
+            // Translates some text into Russian
+            await translate
+              .translate(item.VendorName[0], params.translateLanguageCode)
+              .then(results => {
+                item.translateVendorName = results[0];
+              })
+              .catch(err => {
+                this.logger.error('ERROR:', err);
+              });
           }
           //* * convert price   */
           if (typeof params.toCurrencyName !== 'undefined') {
@@ -120,23 +140,6 @@ class ItemService extends Service {
               }
             }
           }
-
-          // The text to translate
-          // const text = 'Hello, world!';
-          // The target language
-          // const target = 'ru';
-          // Translates some text into Russian
-          // await translate
-          //   .translate(text, target)
-          //   .then(results => {
-          //     const translation = results[0];
-
-          //     this.logger.debug(`Text: ${text}`);
-          //     this.logger.debug(`Translation: ${translation}`);
-          //   })
-          //   .catch(err => {
-          //     this.logger.error('ERROR:', err);
-          //   });
         }
       }
       this.logger.debug(jsonObj);
