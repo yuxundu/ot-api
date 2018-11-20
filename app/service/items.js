@@ -5,17 +5,16 @@ const Service = require('egg').Service;
 const parseString = require('xml2js').parseString;
 // Imports the Google Cloud client library
 const { Translate } = require('@google-cloud/translate');
-const projectId = 'long-ceiling-221221';
-const key = 'AIzaSyCu-2T7-1B2t3hk92YYwa5618OacoQi_3I';
-const translate = new Translate({
-  projectId,
-  key,
-});
+
 class ItemService extends Service {
   constructor(ctx) {
     super(ctx);
     this.root = this.config.ota.serverUrl;
     this.instanceKey = this.config.ota.instanceKey;
+    this.translate = new Translate({
+      projectId: this.config.translate.projectId,
+      key: this.config.translate.key,
+    });
   }
 
   async request(url, data) {
@@ -30,7 +29,7 @@ class ItemService extends Service {
   }
 
   async convertMoney(from, to, amount) {
-    const url = `https://data.fixer.io/api/convert?access_key=86400c432690fff54e9bea2545dbc0bf&from=${from}&to=${to}&amount=${amount}&format=1`;
+    const url = `https://data.fixer.io/api/convert?access_key=${this.config.convert.access_key}&from=${from}&to=${to}&amount=${amount}&format=1`;
     const opts = {
       timeout: [ '30s', '30s' ],
       dataType: 'json',
@@ -100,11 +99,10 @@ class ItemService extends Service {
           //   item.Title[0] = jsonItemInfoObj.OtapiItemInfoAnswer.OtapiItemInfo[0].Title[0];
           // }
           this.ctx.logger.debug(item.Title[0]);
-          item.Title[0] = 'test';
           if (item.OriginalTitle) {
             this.ctx.logger.info(item.OriginalTitle[0]);
             // Translates some text into Russian
-            await translate
+            await this.translate
               .translate(item.OriginalTitle[0], params.translateLanguageCode)
               .then(results => {
                 item.translateTitle = results[0];
@@ -116,7 +114,7 @@ class ItemService extends Service {
           if (item.VendorName) {
             this.ctx.logger.info(item.VendorName[0]);
             // Translates some text into Russian
-            await translate
+            await this.translate
               .translate(item.VendorName[0], params.translateLanguageCode)
               .then(results => {
                 item.translateVendorName = results[0];

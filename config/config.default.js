@@ -10,6 +10,15 @@ module.exports = appInfo => {
     serverUrl: 'http://otapi.net/OtapiWebService2.asmx',
     instanceKey: '6fe9807c-56dd-4f87-a550-fe49cf4b7d6b',
   };
+  // the config of the google-cloud-translate
+  config.translate = {
+    projectId: 'long-ceiling-221221',
+    key: 'AIzaSyCu-2T7-1B2t3hk92YYwa5618OacoQi_3I',
+  };
+  // the config of the google-cloud-translate
+  config.convert = {
+    access_key: '86400c432690fff54e9bea2545dbc0bf',
+  };
 
   // add your config here
   config.middleware = [ ];
