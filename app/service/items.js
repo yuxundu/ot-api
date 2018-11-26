@@ -99,29 +99,31 @@ class ItemService extends Service {
           //   item.Title[0] = jsonItemInfoObj.OtapiItemInfoAnswer.OtapiItemInfo[0].Title[0];
           // }
           this.ctx.logger.debug(item.Title[0]);
-          if (item.OriginalTitle) {
-            this.ctx.logger.info(item.OriginalTitle[0]);
-            // Translates some text into Russian
-            await this.translate
-              .translate(item.OriginalTitle[0], params.translateLanguageCode)
-              .then(results => {
-                item.translateTitle = results[0];
-              })
-              .catch(err => {
-                this.logger.error('ERROR:', err);
-              });
-          }
-          if (item.VendorName) {
-            this.ctx.logger.info(item.VendorName[0]);
-            // Translates some text into Russian
-            await this.translate
-              .translate(item.VendorName[0], params.translateLanguageCode)
-              .then(results => {
-                item.translateVendorName = results[0];
-              })
-              .catch(err => {
-                this.logger.error('ERROR:', err);
-              });
+          if (typeof params.translateLanguageCode !== 'undefined') {
+            if (item.OriginalTitle) {
+              this.ctx.logger.info(item.OriginalTitle[0]);
+              // Translates some text into Russian
+              await this.translate
+                .translate(item.OriginalTitle[0], params.translateLanguageCode)
+                .then(results => {
+                  item.translateTitle = results[0];
+                })
+                .catch(err => {
+                  this.logger.error('ERROR:', err);
+                });
+            }
+            if (item.VendorName) {
+              this.ctx.logger.info(item.VendorName[0]);
+              // Translates some text into Russian
+              await this.translate
+                .translate(item.VendorName[0], params.translateLanguageCode)
+                .then(results => {
+                  item.translateVendorName = results[0];
+                })
+                .catch(err => {
+                  this.logger.error('ERROR:', err);
+                });
+            }
           }
           //* * convert price   */
           if (typeof params.toCurrencyName !== 'undefined') {
